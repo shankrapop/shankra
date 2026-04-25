@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Start-Sleep -Milliseconds 800; try { $r = Invoke-WebRequest -Uri \"http://127.0.0.1:8000/\" -UseBasicParsing -TimeoutSec 5; \"STATUS: $\\($r.StatusCode\\)\"; \"LENGTH: $\\($r.RawContentLength\\)\" } catch { \"ERROR: $\\($_.Exception.Message\\)\" })"
+    ]
+  }
+}
