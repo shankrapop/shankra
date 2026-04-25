@@ -309,19 +309,31 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
 }
 .hero h1 {
   color: #fff;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 .hero .lede {
-  color: rgba(255,255,255,.85);
-  font-size: clamp(1rem, .35vw + .9rem, 1.15rem);
-  max-width: 680px;
-  margin-bottom: 36px;
+  color: rgba(255,255,255,.86);
+  font-size: clamp(1.05rem, .55vw + .95rem, 1.3rem);
+  font-weight: 400;
+  line-height: 1.5;
+  max-width: 540px;
+  margin-bottom: 44px;
 }
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-bottom: 56px;
+}
+
+/* Larger, more prominent hero CTA */
+.btn-hero {
+  padding: 20px 44px;
+  font-size: 1.05rem;
+  letter-spacing: .02em;
+  border-radius: 8px;
+}
+.btn-hero.btn-primary {
+  box-shadow: 0 10px 26px rgba(196,30,42,.38);
 }
 .hero-meta {
   display: flex;
@@ -387,16 +399,60 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
   border-color: var(--accent);
   box-shadow: var(--shadow-md);
 }
-.feature-num {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1rem;
+/* Minimal line icon at the top of each feature card — single accent color */
+.feature-icon {
   color: var(--accent);
-  letter-spacing: .04em;
-  margin-bottom: 36px;
+  margin-bottom: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.feature-icon svg {
+  width: 36px;
+  height: 36px;
+  display: block;
+  stroke-width: 1.75;
 }
 .feature-card h3 { margin-bottom: 8px; color: var(--ink); }
 .feature-card p { margin: 0; font-size: .95rem; }
+
+/* Marquee variant — full-bleed horizontal scroller (10 features, looping) */
+.features-marquee {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  padding: 8px 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+.features-track {
+  display: flex;
+  gap: 22px;
+  width: max-content;
+  animation: marquee-scroll-left 60s linear infinite;
+  will-change: transform;
+}
+.features-track:hover { animation-play-state: paused; }
+.features-marquee .feature-card {
+  width: 280px;
+  flex-shrink: 0;
+}
+@keyframes marquee-scroll-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .features-track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+  .features-marquee {
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+}
 
 /* ============== PRODUCT ============== */
 .product-grid {
@@ -410,11 +466,16 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
+  background: #1a1614;
 }
 .product-media img {
-  width: 100%; height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  /* Anchor right — the bag sits in the right portion of the photo, so
+     center-cropping was hiding the front of the sack. */
+  object-position: right center;
 }
 .product-badge {
   position: absolute;
@@ -483,6 +544,7 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
   box-shadow: var(--shadow-md);
 }
 .app-media {
+  position: relative;
   aspect-ratio: 4 / 3;
   overflow: hidden;
   background: var(--grey-100);
@@ -490,9 +552,22 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
 .app-media img {
   width: 100%; height: 100%;
   object-fit: cover;
-  transition: transform .5s ease;
+  transition: transform .6s ease;
 }
-.app-card:hover .app-media img { transform: scale(1.05); }
+/* Subtle persistent bottom-fade gradient — adds depth without darkening
+   the image. Strengthens slightly on hover for a "lift" feel. */
+.app-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(20,17,14,.32) 100%);
+  pointer-events: none;
+  transition: background .35s ease;
+}
+.app-card:hover .app-media img { transform: scale(1.08); }
+.app-card:hover .app-media::after {
+  background: linear-gradient(180deg, transparent 45%, rgba(20,17,14,.5) 100%);
+}
 .app-body {
   padding: 22px 22px 26px;
 }
@@ -536,10 +611,21 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
 }
 
 .about-media {
+  position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
   aspect-ratio: 4 / 5;
   box-shadow: var(--shadow-lg);
+  background: #1a1614;
+}
+/* Subtle bottom-fade gradient gives the image visual weight at the base
+   and ties it to the dark CTA banner directly below. */
+.about-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(20,17,14,.4) 100%);
+  pointer-events: none;
 }
 .about-media img {
   width: 100%; height: 100%;
@@ -550,7 +636,7 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
 .cta-banner {
   background: var(--ink);
   color: #fff;
-  padding: clamp(56px, 7vw, 100px) 0;
+  padding: clamp(64px, 8vw, 112px) 0;
   position: relative;
   overflow: hidden;
 }
@@ -563,18 +649,33 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
     radial-gradient(circle at 0% 100%, rgba(242,159,26,.1), transparent 55%);
   pointer-events: none;
 }
+/* Horizontal layout: text block on the left, CTA button on the right */
 .cta-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 40px;
+  gap: 48px;
   flex-wrap: wrap;
   position: relative;
 }
+.cta-text {
+  flex: 1 1 480px;
+  min-width: 0;
+}
 .cta-banner h2 {
   color: #fff;
+  margin: 0 0 14px;
+  max-width: 640px;
+}
+.cta-sub {
+  color: rgba(255,255,255,.78);
+  font-size: clamp(1rem, .35vw + .9rem, 1.1rem);
+  line-height: 1.6;
+  max-width: 580px;
   margin: 0;
-  max-width: 700px;
+}
+.cta-banner .btn-hero {
+  flex-shrink: 0;
 }
 
 /* ============== CONTACT ============== */
@@ -729,7 +830,7 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
     grid-template-columns: 1fr;
     gap: 48px;
   }
-  .product-media,
+  .product-media { aspect-ratio: 4 / 3; max-height: 520px; }
   .about-media { aspect-ratio: 16 / 11; max-height: 520px; }
   .about-media { order: -1; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
@@ -758,14 +859,16 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
     padding-right: 0;
   }
   .hero-actions .btn { flex: 1; }
-  .hero-meta { gap: 24px 32px; }
-  .hero-meta strong { font-size: 1.25rem; }
+  .btn-hero { padding: 18px 28px; font-size: 1rem; }
+  .hero .lede { font-size: 1.05rem; max-width: none; margin-bottom: 32px; }
 
   .section-head { margin-bottom: 40px; }
   .check-list { grid-template-columns: 1fr; }
   .stats { grid-template-columns: 1fr 1fr; }
-  .cta-inner { flex-direction: column; align-items: flex-start; }
+  .cta-inner { flex-direction: column; align-items: flex-start; gap: 24px; }
   .cta-banner h2 { font-size: 1.85rem; }
+  .cta-sub { font-size: 1rem; }
+  .cta-banner .btn-hero { width: 100%; max-width: 360px; }
 
   .contact-form { padding: 24px; }
   .footer-inner { grid-template-columns: 1fr; gap: 32px; }

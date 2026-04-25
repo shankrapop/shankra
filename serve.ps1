@@ -54,6 +54,10 @@ try {
         $type = $mime[$ext]
         if (-not $type) { $type = 'application/octet-stream' }
         $res.ContentType = $type
+        # Force browsers to always fetch fresh content during development.
+        $res.Headers.Add('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+        $res.Headers.Add('Pragma', 'no-cache')
+        $res.Headers.Add('Expires', '0')
         $res.ContentLength64 = $bytes.Length
         $res.OutputStream.Write($bytes, 0, $bytes.Length)
         Write-Host ("200 {0}" -f $req.Url.AbsolutePath) -ForegroundColor DarkGreen
