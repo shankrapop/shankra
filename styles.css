@@ -531,6 +531,7 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
+  align-items: stretch;
 }
 .app-card {
   background: #fff;
@@ -538,21 +539,40 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
   border-radius: var(--radius);
   overflow: hidden;
   transition: transform .25s ease, box-shadow .25s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .app-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
 }
+/* Photo container — locked to a uniform 4:3 box on every card.
+   Uses the padding-bottom trick (75% = 3/4) so the box height is always
+   exactly 75% of its width, in every browser, regardless of the image's
+   intrinsic dimensions. The image is absolutely positioned to fill it. */
 .app-media {
   position: relative;
-  aspect-ratio: 4 / 3;
+  width: 100%;
+  height: 0;
+  padding-bottom: 75%;
   overflow: hidden;
   background: var(--grey-100);
+  flex-shrink: 0;
 }
 .app-media img {
-  width: 100%; height: 100%;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
   object-fit: cover;
   transition: transform .6s ease;
+}
+/* False Ceilings card: anchor crop to the top so the ceiling design
+   stays in frame when a portrait photo is used. */
+.applications-grid .app-card:nth-child(1) .app-media img {
+  object-position: center top;
 }
 /* Subtle persistent bottom-fade gradient — adds depth without darkening
    the image. Strengthens slightly on hover for a "lift" feel. */
@@ -570,6 +590,7 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
 }
 .app-body {
   padding: 22px 22px 26px;
+  flex: 1;
 }
 .app-body h3 {
   font-size: 1.1rem;
