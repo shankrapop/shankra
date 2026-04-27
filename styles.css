@@ -991,7 +991,10 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
 
   /* CTA banner */
   .cta-banner { padding: 56px 0; }
-  .cta-inner { flex-direction: column; align-items: flex-start; gap: 22px; }
+  .cta-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
+  /* Override the desktop flex-basis: 480px which was forcing extra
+     height on the text block in mobile column layout. */
+  .cta-text { flex: 0 0 auto; width: 100%; }
   .cta-banner h2 { font-size: 1.55rem; }
   .cta-sub { font-size: 1rem; }
   .cta-banner .btn-hero { width: 100%; max-width: none; }
