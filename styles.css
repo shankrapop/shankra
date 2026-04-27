@@ -842,6 +842,8 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
 .wa-fab:hover { transform: translateY(-2px) scale(1.04); color: #fff; }
 
 /* ============== RESPONSIVE ============== */
+
+/* Tablet — 2-column grids, single-column for hero-paired layouts */
 @media (max-width: 980px) {
   .features-grid { grid-template-columns: repeat(2, 1fr); }
   .applications-grid { grid-template-columns: repeat(2, 1fr); }
@@ -858,50 +860,175 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
   .footer-brand { grid-column: 1 / -1; }
 }
 
+/* Mobile — single column, tighter rhythm, larger tap targets */
 @media (max-width: 720px) {
-  :root { --header-h: 68px; }
+  :root { --header-h: 64px; }
 
+  /* Header / nav */
   .primary-nav,
   .header-cta { display: none; }
   .nav-toggle { display: block; }
+  .brand-logo { height: 32px; }
 
-  .brand-logo { height: 36px; }
+  /* Container — tighter side gutters */
+  .container { padding: 0 18px; }
 
-  .hero { min-height: 88vh; padding: calc(var(--header-h) + 48px) 0 64px; }
+  /* Typography — capped to comfortable mobile sizes */
+  h1 { font-size: 1.875rem; line-height: 1.18; }   /* ~30px */
+  h2 { font-size: 1.55rem;  line-height: 1.22; }   /* ~25px */
+  h3 { font-size: 1.05rem;  line-height: 1.3; }    /* ~17px */
+  p  { font-size: .95rem;   line-height: 1.6; }    /* ~15px */
+
+  /* Section vertical rhythm */
+  .section { padding: 56px 0; }
+  .section-head { margin-bottom: 32px; }
+  .section-sub { font-size: 1rem; }
+  .eyebrow { font-size: .72rem; padding: 5px 10px; }
+
+  /* Hero — full-bleed photo with text overlaid on the LEFT, bag visible
+     on the right. Aspect ratio matches Figma spec (440×340 ≈ 1.29:1). */
+  .hero {
+    aspect-ratio: 440 / 340;
+    min-height: 0;
+    padding: calc(var(--header-h) + 16px) 0 20px;
+    background: var(--warm-ink);
+    color: #fff;
+    display: flex;
+    align-items: center;
+  }
   .hero-media img {
-    object-position: 78% center;
+    /* Anchor right so the bag stays in frame on the right side of the screen */
+    object-position: right center;
   }
+  /* Heavy left-side gradient: dark on the left for text readability,
+     fading to transparent so the bag remains visible on the right. */
   .hero-overlay {
-    background: rgba(0, 0, 0, 0.6);
+    background: linear-gradient(to right,
+      rgba(0,0,0,0.78) 0%,
+      rgba(0,0,0,0.6) 30%,
+      rgba(0,0,0,0.25) 60%,
+      transparent 88%);
   }
+
+  /* Text column: left-anchored, capped at ~64% of the viewport so the
+     bag has clear visible space on the right side. */
   .hero .hero-content {
-    margin-left: 20px;
-    margin-right: 20px;
+    max-width: 64%;
+    margin-left: 0;
+    margin-right: auto;
+    padding-left: 12px;
     padding-right: 0;
   }
-  .hero-actions .btn { flex: 1; }
-  .btn-hero { padding: 18px 28px; font-size: 1rem; }
-  .hero .lede { font-size: 1.05rem; max-width: none; margin-bottom: 32px; }
 
-  .section-head { margin-bottom: 40px; }
-  .check-list { grid-template-columns: 1fr; }
-  .stats { grid-template-columns: 1fr 1fr; }
-  .cta-inner { flex-direction: column; align-items: flex-start; gap: 24px; }
-  .cta-banner h2 { font-size: 1.85rem; }
+  /* Restore the white-on-dark text styling */
+  .hero h1 { color: #fff; }
+  .hero h1 .accent-text { color: var(--accent); }
+  .hero .lede { color: rgba(255,255,255,.88); }
+  .hero .eyebrow {
+    color: rgba(255,255,255,.85);
+    background: rgba(255,255,255,.06);
+    border-color: rgba(255,255,255,.25);
+    backdrop-filter: blur(6px);
+    font-size: .625rem;         /* 10px — fits "PREMIUM QUALITY GYPSUM PLASTER" on one line */
+    letter-spacing: .1em;
+    white-space: nowrap;
+    padding: 5px 10px;
+    margin-bottom: 14px;
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;           /* 24px */
+    line-height: 1.2;
+    letter-spacing: -.015em;
+    margin-bottom: 10px;
+  }
+  .hero .lede {
+    font-size: .875rem;          /* 14px */
+    line-height: 1.45;
+    max-width: 100%;
+    margin-bottom: 14px;
+  }
+  .hero-actions {
+    width: auto;
+    margin-top: 0;
+  }
+  /* Button is left-aligned and content-width (not full-width) so it
+     doesn't stretch into the bag area on the right. */
+  .hero-actions .btn {
+    flex: 0 0 auto;
+    width: auto;
+  }
+  .btn-hero { padding: 10px; font-size: .75rem; }   /* 12px */
+
+  /* Why marquee — smaller cards, slower scroll for less visual noise */
+  .features-marquee .feature-card { width: 240px; padding: 26px 22px; }
+  .features-track { gap: 16px; animation-duration: 80s; }
+  .feature-icon svg { width: 32px; height: 32px; }
+
+  /* Product */
+  .product-grid { gap: 36px; }
+  .product-content > p { font-size: 1rem; }
+  .check-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 22px 0 28px;
+  }
+  .product-content .btn { width: 100%; max-width: none; }
+
+  /* Applications — single column, clean stack */
+  .applications-grid { grid-template-columns: 1fr; gap: 18px; }
+  .app-body { padding: 18px 18px 22px; }
+
+  /* About */
+  .about-grid { gap: 36px; }
+  .stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 28px;
+    padding-top: 28px;
+  }
+  .stat strong { font-size: 1.4rem; }
+
+  /* CTA banner */
+  .cta-banner { padding: 56px 0; }
+  .cta-inner { flex-direction: column; align-items: flex-start; gap: 22px; }
+  .cta-banner h2 { font-size: 1.55rem; }
   .cta-sub { font-size: 1rem; }
-  .cta-banner .btn-hero { width: 100%; max-width: 360px; }
+  .cta-banner .btn-hero { width: 100%; max-width: none; }
 
-  .contact-form { padding: 24px; }
-  .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  /* Contact */
+  .contact-grid { gap: 36px; }
+  .contact-info > p { font-size: 1rem; }
+  .contact-list li { padding: 14px 16px; }
+  .contact-form { padding: 22px; }
+  .field { margin-bottom: 18px; }
+  /* 16px input font prevents the iOS auto-zoom on focus */
+  .field input, .field textarea {
+    padding: 13px 14px;
+    font-size: 16px;
+  }
+
+  /* Footer */
+  .footer-inner { grid-template-columns: 1fr; gap: 32px; padding-bottom: 36px; }
   .footer-bottom .container { flex-direction: column; }
+  .footer-brand .brand-logo { height: 48px; }
 
+  /* WhatsApp floating button */
   .wa-fab { bottom: 16px; right: 16px; width: 52px; height: 52px; }
 }
 
+/* Small phones */
 @media (max-width: 460px) {
-  .features-grid,
-  .applications-grid { grid-template-columns: 1fr; }
+  .container { padding: 0 16px; }
+  .section { padding: 48px 0; }
   .stats { grid-template-columns: 1fr; }
+  .hero .hero-content { margin-left: 0; margin-right: 0; padding-left: 10px; }
+  .hero h1 { font-size: 1.5rem; line-height: 1.2; }       /* 24px */
+  .hero .lede { font-size: .875rem; margin-bottom: 18px; } /* 14px */
+  .btn-hero { padding: 10px; }
+  .cta-banner h2 { font-size: 1.4rem; }
+  .features-marquee .feature-card { width: 220px; padding: 22px 20px; }
+  .contact-form { padding: 18px; }
 }
 
 /* ============== A11Y / MOTION ============== */

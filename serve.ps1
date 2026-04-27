@@ -2,10 +2,11 @@
 # Usage: powershell -ExecutionPolicy Bypass -File .\serve.ps1
 param(
   [int]$Port = 8000,
-  [string]$Root = $PSScriptRoot
+  [string]$Root = $PSScriptRoot,
+  [string]$BindHost = "127.0.0.1"
 )
 
-$prefix  = "http://127.0.0.1:$Port/"
+$prefix  = "http://$($BindHost):$Port/"
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add($prefix)
 

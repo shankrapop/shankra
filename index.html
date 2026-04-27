@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=18" />
 </head>
 <body>
 
@@ -56,16 +56,19 @@
     <!-- ============ HERO ============ -->
     <section class="hero">
       <div class="hero-media" aria-hidden="true">
-        <img src="assets/hero-bag.jpg" alt="" />
+        <picture>
+          <source media="(max-width: 720px)" srcset="assets/hero-bag-mobile.png" />
+          <img src="assets/hero-bag.jpg" alt="" />
+        </picture>
         <div class="hero-overlay"></div>
       </div>
 
       <div class="container hero-content">
         <span class="eyebrow">Premium Quality Gypsum Plaster</span>
-        <h1>Ready to Achieve a<br /><span class="accent-text">Perfect Finish?</span></h1>
+        <h1>Ready to Achieve a<br /><span class="accent-text">Perfect Finish&nbsp;?</span></h1>
         <p class="lede">Smooth finishes. Strong bonding. Reliable results for every surface.</p>
         <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary btn-hero">Get a Quote</a>
+          <a href="#contact" class="btn btn-primary btn-hero">Get a quote</a>
         </div>
       </div>
     </section>
@@ -218,7 +221,7 @@
             <li><span class="check">✓</span> Smooth Finish</li>
           </ul>
 
-          <a href="#contact" class="btn btn-primary">Get a Quote</a>
+          <a href="#contact" class="btn btn-primary btn-hero">Get a Quote</a>
         </div>
       </div>
     </section>
@@ -385,7 +388,7 @@
             <label for="message">Message</label>
             <textarea id="message" name="message" rows="5" required placeholder="Tell us a little about your project or requirement..."></textarea>
           </div>
-          <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+          <button type="submit" class="btn btn-primary btn-hero btn-block">Send Message</button>
           <p class="form-status" id="formStatus" aria-live="polite"></p>
         </form>
       </div>
