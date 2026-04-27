@@ -1011,8 +1011,13 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
     font-size: 16px;
   }
 
-  /* Footer */
-  .footer-inner { grid-template-columns: 1fr; gap: 32px; padding-bottom: 36px; }
+  /* Footer — brand on top spans full width, Explore + Contact side by side */
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 24px;
+    padding-bottom: 36px;
+  }
+  .footer-brand { grid-column: 1 / -1; }
   .footer-bottom .container { flex-direction: column; }
   .footer-brand .brand-logo { height: 48px; }
 
