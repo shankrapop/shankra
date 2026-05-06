@@ -1,0 +1,45 @@
+name: Deploy to shankra.co.in
+
+# Triggers on every push to main
+on:
+  push:
+    branches: [main]
+  # Also allow manually triggering from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: FTP upload + Cloudflare purge
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Sync files to GoDaddy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ./public_html/
+          # Files NOT to upload (dev-only)
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/node_modules/**
+            **/.claude/**
+            **/serve.ps1
+            **/README.md
+            **/.gitignore
+            **/COMMIT_MSG.txt
+
+      - name: Purge Cloudflare cache
+        # Only run if Cloudflare secrets are configured
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ZONE_ID != '' }}
+        run: |
+          curl --silent --show-error --fail \
+            -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}'
