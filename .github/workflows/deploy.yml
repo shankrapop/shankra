@@ -21,7 +21,9 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ./public_html/
+          # The deploy@ FTP user is already chrooted to /public_html/,
+          # so the server-dir is just the root (./).
+          server-dir: ./
           # Files NOT to upload (dev-only)
           exclude: |
             **/.git*
