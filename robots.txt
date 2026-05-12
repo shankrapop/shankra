@@ -1,4 +1,55 @@
+# Shankra Plaster — robots.txt
+# Allow all crawlers, including AI crawlers, to index this site.
+# AI Overview / ChatGPT / Claude / Perplexity citations drive brand discovery
+# for a B2B manufacturer at this stage — visibility > data hygiene.
+
 User-agent: *
+Allow: /
+
+# Explicitly allow AI crawlers (in case of upstream managed-block defaults).
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: cohere-ai
 Allow: /
 
 Sitemap: https://shankra.co.in/sitemap.xml
