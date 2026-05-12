@@ -1641,3 +1641,28 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
   .cmp-vs-side p { font-size: 11px; }
   .cmp-vs-badge { font-size: 9px; }
 }
+
+/* ============== CONTACT FORM — WHATSAPP BUTTON + HINTS ============== */
+.btn-whatsapp {
+  background: #25d366;
+  color: #fff;
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.btn-whatsapp:hover { background: #1da851; color: #fff; }
+.btn-whatsapp svg { flex-shrink: 0; }
+
+.field-hint {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--grey-500);
+  margin-left: 4px;
+}
+
+.contact-form button[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

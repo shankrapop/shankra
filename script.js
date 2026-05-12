@@ -42,27 +42,78 @@
     if (window.innerWidth > 720 && !mobileNav.hidden) closeNav();
   });
 
-  // Contact form (no backend — graceful client-side handler)
+  // Contact form — submits to Web3Forms
   const form = document.getElementById('contactForm');
   const status = document.getElementById('formStatus');
+  const submitBtn = document.getElementById('formSubmit');
+
+  // WhatsApp number used by the secondary submit button (digits only, no '+').
+  // e.g. '919876543210' for +91 98765 43210
+  const WHATSAPP_NUMBER = 'YOUR_WHATSAPP_NUMBER';
 
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = new FormData(form);
       const name = (data.get('name') || '').toString().trim();
       const phone = (data.get('phone') || '').toString().trim();
-      const message = (data.get('message') || '').toString().trim();
 
-      if (!name || !phone || !message) {
-        status.textContent = 'Please fill in all fields before sending.';
+      if (!name || !phone) {
         status.style.color = '#c0392b';
+        status.textContent = 'Please enter your name and phone number.';
         return;
       }
 
+      submitBtn.disabled = true;
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Sending…';
       status.style.color = '';
-      status.textContent = 'Thanks — we’ll get back to you shortly.';
-      form.reset();
+      status.textContent = '';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        const result = await res.json().catch(() => ({}));
+        if (res.ok && result.success !== false) {
+          status.style.color = '';
+          status.textContent = 'Thanks — we will get back to you within one business day.';
+          form.reset();
+        } else {
+          status.style.color = '#c0392b';
+          status.textContent = (result && result.message)
+            ? result.message
+            : 'Something went wrong. Please try WhatsApp or call us instead.';
+        }
+      } catch (err) {
+        status.style.color = '#c0392b';
+        status.textContent = 'Network error. Please try WhatsApp or call us instead.';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    });
+  }
+
+  // WhatsApp secondary submit — opens wa.me with pre-filled message.
+  // Hidden until a real WHATSAPP_NUMBER is configured above.
+  const whatsappBtn = document.getElementById('whatsappBtn');
+  if (whatsappBtn && (!WHATSAPP_NUMBER || WHATSAPP_NUMBER === 'YOUR_WHATSAPP_NUMBER')) {
+    whatsappBtn.hidden = true;
+  }
+  if (whatsappBtn && form && !whatsappBtn.hidden) {
+    whatsappBtn.addEventListener('click', () => {
+      const name = (form.elements.name.value || '').trim();
+      const phone = (form.elements.phone.value || '').trim();
+      const message = (form.elements.message.value || '').trim();
+      const lines = ['Hi Shankra Plaster, I need a quote for gypsum plaster.'];
+      if (name) lines.push('Name: ' + name);
+      if (phone) lines.push('Phone: ' + phone);
+      if (message) lines.push('Details: ' + message);
+      const text = encodeURIComponent(lines.join('\n'));
+      window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + text, '_blank', 'noopener');
     });
   }
 
