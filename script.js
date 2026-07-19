@@ -49,7 +49,7 @@
 
   // WhatsApp number used by the secondary submit button (digits only, no '+').
   // e.g. '919876543210' for +91 98765 43210
-  const WHATSAPP_NUMBER = '919265673060';
+  const WHATSAPP_NUMBER = '919050666673';
 
   if (form) {
     form.addEventListener('submit', async (e) => {
