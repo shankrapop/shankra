@@ -1666,3 +1666,92 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
   opacity: 0.7;
   cursor: not-allowed;
 }
+
+/* =========================================================
+   WhatsApp choice popup — appears when any WA entry point is
+   clicked; lets the user pick which number to chat with.
+   ========================================================= */
+.wa-choice-popup[hidden] { display: none; }
+.wa-choice-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.wa-choice-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 15, 15, 0.55);
+  backdrop-filter: blur(2px);
+  animation: waFadeIn 0.18s ease-out;
+}
+.wa-choice-panel {
+  position: relative;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px 26px 22px;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  animation: waSlideUp 0.22s ease-out;
+}
+.wa-choice-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--grey-500);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.15s, color 0.15s;
+}
+.wa-choice-close:hover { background: var(--grey-100); color: var(--ink); }
+.wa-choice-panel h4 {
+  margin: 0 0 6px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.wa-choice-panel p {
+  margin: 0 0 18px 0;
+  font-size: 14px;
+  color: var(--grey-700);
+}
+.wa-choice-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  background: #f4faf6;
+  border: 2px solid #d5edd8;
+  border-radius: 12px;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+.wa-choice-option:last-child { margin-bottom: 0; }
+.wa-choice-option:hover {
+  background: #25D366;
+  border-color: #25D366;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+.wa-choice-option svg { flex-shrink: 0; color: #25D366; }
+.wa-choice-option:hover svg { color: #ffffff; }
+body.wa-choice-open { overflow: hidden; }
+@keyframes waFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes waSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
