@@ -47,11 +47,8 @@
   const status = document.getElementById('formStatus');
   const submitBtn = document.getElementById('formSubmit');
 
-  // WhatsApp numbers (digits only, no '+'). Popup lets the user choose which one to chat with.
-  const WHATSAPP_NUMBERS = [
-    { number: '919050666673', display: '+91 90506 66673' },
-    { number: '919050666659', display: '+91 90506 66659' },
-  ];
+  // WhatsApp numbers (digits only, no '+'). Every click is silently load-balanced 50/50 between them.
+  const WHATSAPP_NUMBERS = ['919050666673', '919050666659'];
 
   if (form) {
     form.addEventListener('submit', async (e) => {
@@ -99,65 +96,20 @@
     });
   }
 
-  // WhatsApp choice popup — lets the user pick which number to chat with.
-  // Intercepts every WhatsApp entry point (floating button, footer link, form submit)
-  // and shows a small popup listing both numbers.
-  const waPopup = document.createElement('div');
-  waPopup.className = 'wa-choice-popup';
-  waPopup.hidden = true;
-  waPopup.innerHTML =
-    '<div class="wa-choice-backdrop" data-wa-close></div>' +
-    '<div class="wa-choice-panel" role="dialog" aria-label="Chat on WhatsApp">' +
-      '<button type="button" class="wa-choice-close" data-wa-close aria-label="Close">&times;</button>' +
-      '<h4>Chat on WhatsApp</h4>' +
-      '<p>Choose a number to continue:</p>' +
-      WHATSAPP_NUMBERS.map((n) =>
-        '<a class="wa-choice-option" data-wa-base="https://wa.me/' + n.number + '" ' +
-        'href="https://wa.me/' + n.number + '" target="_blank" rel="noopener">' +
-          '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">' +
-            '<path fill="currentColor" d="M19.05 4.91A10 10 0 0 0 4.1 17.39L3 21.5a.5.5 0 0 0 .62.62l4.21-1.06A10 10 0 1 0 19.05 4.91Z"/>' +
-          '</svg>' +
-          '<span>' + n.display + '</span>' +
-        '</a>'
-      ).join('') +
-    '</div>';
-  document.body.appendChild(waPopup);
-
-  function showWaPopup(prefilledMessage) {
-    const encoded = prefilledMessage ? encodeURIComponent(prefilledMessage) : '';
-    waPopup.querySelectorAll('.wa-choice-option').forEach((a) => {
-      const base = a.getAttribute('data-wa-base');
-      a.href = encoded ? base + '?text=' + encoded : base;
-    });
-    waPopup.hidden = false;
-    document.body.classList.add('wa-choice-open');
-  }
-  function hideWaPopup() {
-    waPopup.hidden = true;
-    document.body.classList.remove('wa-choice-open');
-  }
-
-  // Delegated listener — intercept any WhatsApp entry point
+  // Intercept every WhatsApp entry point (floating button, footer link, contact section,
+  // form's WhatsApp submit) and route each click to a randomly-picked number so both team
+  // members receive roughly half the messages over time.
   document.addEventListener('click', (e) => {
-    // Close popup on backdrop / close button click
-    if (e.target.closest('[data-wa-close]')) {
-      hideWaPopup();
-      return;
-    }
-    // Ignore clicks inside the popup panel (the wa-choice-option links go through normally)
-    if (e.target.closest('.wa-choice-panel a')) return;
-
-    // Intercept: floating WhatsApp button, form's WhatsApp submit, any wa.me link on the page
     const trigger = e.target.closest('.wa-fab, #whatsappBtn, a[href*="wa.me/"]');
     if (!trigger) return;
 
     e.preventDefault();
 
-    // If it's the contact-form's WhatsApp button, pre-fill a message from the form
+    // If it's the contact-form's WhatsApp button, build a message from the form fields.
     let message = null;
     if (trigger.id === 'whatsappBtn' && form) {
-      const name = (form.elements.name && form.elements.name.value || '').trim();
-      const phone = (form.elements.phone && form.elements.phone.value || '').trim();
+      const name    = (form.elements.name && form.elements.name.value || '').trim();
+      const phone   = (form.elements.phone && form.elements.phone.value || '').trim();
       const details = (form.elements.message && form.elements.message.value || '').trim();
       const lines = ['Hi Shankra Plaster, I need a quote for gypsum plaster.'];
       if (name)    lines.push('Name: ' + name);
@@ -166,12 +118,9 @@
       message = lines.join('\n');
     }
 
-    showWaPopup(message);
-  });
-
-  // Escape key closes popup
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !waPopup.hidden) hideWaPopup();
+    const number = WHATSAPP_NUMBERS[Math.floor(Math.random() * WHATSAPP_NUMBERS.length)];
+    const url = 'https://wa.me/' + number + (message ? '?text=' + encodeURIComponent(message) : '');
+    window.open(url, '_blank', 'noopener');
   });
 
   // Footer year
