@@ -1755,3 +1755,74 @@ body.wa-choice-open { overflow: hidden; }
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* =========================================================
+   Credentials Strip — thin band under the hero showing
+   ISI mark, IS 2547, BIS licence, and Bikaner provenance.
+   ========================================================= */
+.credentials-strip {
+  background: #fafaf6;
+  border-top: 1px solid var(--grey-200);
+  border-bottom: 1px solid var(--grey-200);
+  padding: 22px 0;
+}
+.credentials-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.credential-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.credential-icon {
+  width: 34px;
+  height: 34px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.credential-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.credential-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+.credential-sub {
+  font-size: 0.72rem;
+  color: var(--grey-500);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .credentials-inner {
+    justify-content: center;
+    gap: 22px 28px;
+  }
+  .credential-item {
+    flex: 1 1 42%;
+    min-width: 200px;
+  }
+}
+@media (max-width: 480px) {
+  .credentials-strip { padding: 18px 0; }
+  .credentials-inner { gap: 18px 20px; }
+  .credential-item { flex: 1 1 100%; }
+  .credential-icon { width: 28px; height: 28px; }
+  .credential-title { font-size: 0.88rem; }
+  .credential-sub { font-size: 0.66rem; }
+}

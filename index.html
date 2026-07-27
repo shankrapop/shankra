@@ -22,18 +22,127 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "url": "https://shankra.co.in/",
-    "name": "Shankra Plaster",
-    "description": "Shankra Plaster — high-quality gypsum plaster and Plaster of Paris for ceilings, wall finishing, and decorative interior work.",
-    "publisher": {
-      "@type": "Organization",
-      "name": "Shankra Plaster",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://shankra.co.in/assets/logo.png"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://shankra.co.in/#website",
+        "url": "https://shankra.co.in/",
+        "name": "Shankra Plaster",
+        "description": "Shankra Plaster — high-quality gypsum plaster and Plaster of Paris for ceilings, wall finishing, and decorative interior work.",
+        "publisher": { "@id": "https://shankra.co.in/#organization" },
+        "inLanguage": "en-IN"
+      },
+      {
+        "@type": ["LocalBusiness", "Manufacturer", "Organization"],
+        "@id": "https://shankra.co.in/#organization",
+        "name": "Shankra Plaster",
+        "legalName": "Shree Shyam Industries",
+        "alternateName": ["Shankra Gypsum Plaster", "Shankra"],
+        "url": "https://shankra.co.in/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://shankra.co.in/assets/logo.png",
+          "width": 2775,
+          "height": 1210
+        },
+        "image": "https://shankra.co.in/assets/logo.png",
+        "description": "Bikaner-based manufacturer of premium ISI-marked gypsum plaster (IS 2547 Part 1, CM/L 8400287413). Made from one of India's highest-purity natural gypsum belts. 25 kg bag delivers 90%+ purity, 85%+ whiteness, and a 25-30 minute working window for smooth, crack-free interior finishes.",
+        "email": "info@shankra.co.in",
+        "telephone": "+919050666673",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "22 BLD, Baller Road, Dantour",
+          "addressLocality": "Bikaner",
+          "addressRegion": "Rajasthan",
+          "postalCode": "334023",
+          "addressCountry": "IN"
+        },
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+919050666673",
+            "contactType": "sales",
+            "areaServed": "IN",
+            "availableLanguage": ["en", "hi"]
+          },
+          {
+            "@type": "ContactPoint",
+            "telephone": "+919050666659",
+            "contactType": "sales",
+            "areaServed": "IN",
+            "availableLanguage": ["en", "hi"]
+          }
+        ],
+        "areaServed": {
+          "@type": "Country",
+          "name": "India"
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "09:00",
+          "closes": "20:00"
+        },
+        "identifier": {
+          "@type": "PropertyValue",
+          "propertyID": "GSTIN",
+          "value": "08AFBFS8825D1ZW"
+        },
+        "vatID": "08AFBFS8825D1ZW",
+        "hasCredential": {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "certification",
+          "name": "BIS ISI Certification — IS 2547 (Part 1)",
+          "identifier": "CM/L 8400287413",
+          "recognizedBy": {
+            "@type": "Organization",
+            "name": "Bureau of Indian Standards (BIS)",
+            "url": "https://www.bis.gov.in/"
+          }
+        },
+        "makesOffer": { "@id": "https://shankra.co.in/#product-gypsum-plaster-25kg" }
+      },
+      {
+        "@type": "Product",
+        "@id": "https://shankra.co.in/#product-gypsum-plaster-25kg",
+        "name": "Shankra Gypsum Plaster",
+        "sku": "SHANKRA-GP-25KG",
+        "category": "Building Materials > Gypsum Plaster",
+        "brand": { "@id": "https://shankra.co.in/#organization" },
+        "manufacturer": { "@id": "https://shankra.co.in/#organization" },
+        "image": [
+          "https://shankra.co.in/assets/hero-bag.jpg"
+        ],
+        "description": "Premium ISI-marked gypsum plaster in 25 kg HDPE bag. 90%+ purity, 85%+ whiteness, 25-30 minute working window. Single-coat application, paint-ready in 72 hours. No water curing needed. Coverage ~11 sqm per bag at 11 mm thickness. Conforms to IS 2547 (Part 1).",
+        "gtin": "",
+        "weight": {
+          "@type": "QuantitativeValue",
+          "value": 25,
+          "unitCode": "KGM"
+        },
+        "additionalProperty": [
+          { "@type": "PropertyValue", "name": "Standard", "value": "IS 2547 (Part 1) — ISI Marked · CM/L 8400287413" },
+          { "@type": "PropertyValue", "name": "Purity", "value": "90%+ CaSO4·1/2H2O" },
+          { "@type": "PropertyValue", "name": "Whiteness", "value": "85%+" },
+          { "@type": "PropertyValue", "name": "Setting time (working window)", "value": "25-30 minutes" },
+          { "@type": "PropertyValue", "name": "Fineness", "value": "Passes 200 mesh" },
+          { "@type": "PropertyValue", "name": "Coverage", "value": "~11 sqm per bag at 11 mm" },
+          { "@type": "PropertyValue", "name": "Application thickness", "value": "10-12 mm (single coat)" },
+          { "@type": "PropertyValue", "name": "Shelf life", "value": "6 months from manufacture" }
+        ],
+        "offers": {
+          "@type": "Offer",
+          "url": "https://shankra.co.in/#contact",
+          "availability": "https://schema.org/InStock",
+          "priceCurrency": "INR",
+          "seller": { "@id": "https://shankra.co.in/#organization" },
+          "areaServed": {
+            "@type": "Country",
+            "name": "India"
+          }
+        }
       }
-    }
+    ]
   }
   </script>
 
@@ -41,7 +150,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles.css?v=30" />
+  <link rel="stylesheet" href="styles.css?v=31" />
 </head>
 <body>
 
@@ -102,6 +211,59 @@
         <div class="hero-actions">
           <a href="#contact" class="btn btn-primary btn-hero">Get a quote</a>
         </div>
+      </div>
+    </section>
+
+    <!-- ============ CREDENTIALS STRIP ============ -->
+    <section class="credentials-strip" aria-label="Certifications and origin">
+      <div class="container credentials-inner">
+
+        <div class="credential-item">
+          <svg class="credential-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2 4 5v7c0 4.4 3.3 8.5 8 10 4.7-1.5 8-5.6 8-10V5l-8-3z"/>
+            <path d="m8.5 12 2.5 2.5L15.5 10"/>
+          </svg>
+          <div class="credential-text">
+            <span class="credential-title">ISI Marked</span>
+            <span class="credential-sub">BIS Certified</span>
+          </div>
+        </div>
+
+        <div class="credential-item">
+          <svg class="credential-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 2v6h6"/>
+            <path d="M9 13h6"/>
+            <path d="M9 17h4"/>
+          </svg>
+          <div class="credential-text">
+            <span class="credential-title">IS 2547 (Part 1)</span>
+            <span class="credential-sub">Gypsum Building Plaster</span>
+          </div>
+        </div>
+
+        <div class="credential-item">
+          <svg class="credential-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="9" r="6"/>
+            <path d="M8.5 13.5 7 22l5-3 5 3-1.5-8.5"/>
+          </svg>
+          <div class="credential-text">
+            <span class="credential-title">CM/L 8400287413</span>
+            <span class="credential-sub">BIS License</span>
+          </div>
+        </div>
+
+        <div class="credential-item">
+          <svg class="credential-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s7-7 7-13a7 7 0 0 0-14 0c0 6 7 13 7 13z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+          <div class="credential-text">
+            <span class="credential-title">Made in Bikaner</span>
+            <span class="credential-sub">Rajasthan · India</span>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -489,8 +651,8 @@
               </a>
             </li>
             <li>
-              <span class="contact-label">Location</span>
-              <span>Bikaner, Rajasthan</span>
+              <span class="contact-label">Address</span>
+              <span>22 BLD, Baller Road, Dantour,<br />Bikaner, Rajasthan 334023</span>
             </li>
           </ul>
         </div>
@@ -551,14 +713,14 @@
           <li><a href="tel:+919050666659">+91 90506 66659</a></li>
           <li><a href="mailto:info@shankra.co.in">info@shankra.co.in</a></li>
           <li><a href="https://wa.me/919050666673" target="_blank" rel="noopener">WhatsApp</a></li>
-          <li>Bikaner, Rajasthan</li>
+          <li>22 BLD, Baller Road, Dantour,<br />Bikaner, Rajasthan 334023</li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
       <div class="container">
-        <span>© <span id="year"></span> Shankra Plaster. All rights reserved.</span>
+        <span>© <span id="year"></span> Shankra Plaster. All rights reserved. · GSTIN: 08AFBFS8825D1ZW</span>
         <span>Crafted for a perfect finish.</span>
       </div>
     </div>
