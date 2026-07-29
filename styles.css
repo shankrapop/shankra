@@ -738,6 +738,17 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
 }
 .wa-link { color: var(--accent) !important; }
 
+.gmaps-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  color: var(--accent) !important;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.gmaps-link:hover { text-decoration: underline; }
+
 .contact-form {
   background: #fff;
   border: 1px solid var(--grey-200);
