@@ -1976,11 +1976,38 @@ body.wa-choice-open { overflow: hidden; }
     min-width: 200px;
   }
 }
-@media (max-width: 480px) {
-  .credentials-strip { padding: 18px 0; }
-  .credentials-inner { gap: 18px 20px; }
-  .credential-item { flex: 1 1 100%; }
-  .credential-icon { width: 28px; height: 28px; }
-  .credential-title { font-size: 0.88rem; }
-  .credential-sub { font-size: 0.66rem; }
+
+/* Mobile: switch to 2x2 tile grid — each credential becomes a small
+   white card with a border. Compact, scannable, and doesn't stack
+   into an awkwardly-tall single column. */
+@media (max-width: 720px) {
+  .credentials-strip {
+    padding: 16px 0;
+    background: #fafaf6;
+  }
+  .credentials-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    justify-content: initial;
+  }
+  .credential-item {
+    flex: none;
+    min-width: 0;
+    padding: 12px 14px;
+    background: #ffffff;
+    border: 1px solid var(--grey-200);
+    border-radius: 10px;
+    gap: 10px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+  .credential-icon { width: 26px; height: 26px; }
+  .credential-title {
+    font-size: 0.82rem;
+    letter-spacing: 0;
+  }
+  .credential-sub {
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+  }
 }
