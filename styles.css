@@ -294,6 +294,13 @@ p { margin: 0 0 1rem; color: var(--grey-700); }
   object-fit: cover;
   object-position: right center;
 }
+/* On mobile, shift crop so the bag sits toward the right of the viewport
+   and leaves clear dark space on the left for the headline. */
+@media (max-width: 720px) {
+  .hero-media img {
+    object-position: 75% center;
+  }
+}
 /* Flat 60% black filter over the hero image. */
 .hero-overlay {
   position: absolute; inset: 0;
