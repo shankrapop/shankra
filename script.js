@@ -123,6 +123,88 @@
     window.open(url, '_blank', 'noopener');
   });
 
+  // Dealership enquiry modal — opens on "Enquire Now" click, submits to Web3Forms
+  const dealerModal = document.getElementById('dealerModal');
+  const dealerOpenBtn = document.getElementById('dealerEnquiryOpen');
+  const dealerForm = document.getElementById('dealerForm');
+  const dealerStatus = document.getElementById('dealerStatus');
+  const dealerSubmit = document.getElementById('dealerSubmit');
+
+  function openDealerModal() {
+    if (!dealerModal) return;
+    dealerModal.hidden = false;
+    dealerModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('dealer-modal-open');
+    // Focus the first input for accessibility
+    const firstInput = dealerModal.querySelector('input, select, textarea');
+    if (firstInput) setTimeout(() => firstInput.focus(), 100);
+  }
+  function closeDealerModal() {
+    if (!dealerModal) return;
+    dealerModal.hidden = true;
+    dealerModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('dealer-modal-open');
+  }
+
+  if (dealerOpenBtn) {
+    dealerOpenBtn.addEventListener('click', openDealerModal);
+  }
+  if (dealerModal) {
+    dealerModal.addEventListener('click', (e) => {
+      if (e.target.closest('[data-dealer-close]')) closeDealerModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !dealerModal.hidden) closeDealerModal();
+    });
+  }
+
+  if (dealerForm) {
+    dealerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(dealerForm);
+      const name  = (data.get('name')  || '').toString().trim();
+      const phone = (data.get('phone') || '').toString().trim();
+      const firm  = (data.get('firm')  || '').toString().trim();
+
+      if (!name || !phone || !firm) {
+        dealerStatus.style.color = '#c0392b';
+        dealerStatus.textContent = 'Please fill in your name, firm name, and mobile number.';
+        return;
+      }
+
+      dealerSubmit.disabled = true;
+      const originalText = dealerSubmit.textContent;
+      dealerSubmit.textContent = 'Submitting…';
+      dealerStatus.style.color = '';
+      dealerStatus.textContent = '';
+
+      try {
+        const res = await fetch(dealerForm.action, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        const result = await res.json().catch(() => ({}));
+        if (res.ok && result.success !== false) {
+          dealerStatus.style.color = '';
+          dealerStatus.textContent = 'Thanks — we will call you within one business day to discuss the dealership opportunity.';
+          dealerForm.reset();
+        } else {
+          dealerStatus.style.color = '#c0392b';
+          dealerStatus.textContent = (result && result.message)
+            ? result.message
+            : 'Something went wrong. Please try WhatsApp or call us instead.';
+        }
+      } catch (err) {
+        dealerStatus.style.color = '#c0392b';
+        dealerStatus.textContent = 'Network error. Please try WhatsApp or call us instead.';
+      } finally {
+        dealerSubmit.disabled = false;
+        dealerSubmit.textContent = originalText;
+      }
+    });
+  }
+
   // Footer year
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();

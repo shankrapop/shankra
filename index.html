@@ -151,7 +151,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles.css?v=32" />
+  <link rel="stylesheet" href="styles.css?v=33" />
 </head>
 <body>
 
@@ -659,6 +659,16 @@
               </a>
             </li>
           </ul>
+
+          <!-- ============ DEALERSHIP CTA CARD ============ -->
+          <div class="dealer-cta">
+            <div class="dealer-cta-body">
+              <span class="eyebrow eyebrow-dark">Partner With Us</span>
+              <h3>Become a Shankra Dealer</h3>
+              <p>Join our growing dealer network across India. Attractive margins, timely delivery from Bikaner, and full marketing support.</p>
+            </div>
+            <button type="button" class="btn btn-primary" id="dealerEnquiryOpen">Enquire Now →</button>
+          </div>
         </div>
 
         <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
@@ -688,6 +698,83 @@
         </form>
       </div>
     </section>
+
+    <!-- ============ DEALERSHIP ENQUIRY MODAL ============ -->
+    <div class="dealer-modal" id="dealerModal" hidden aria-hidden="true">
+      <div class="dealer-modal-backdrop" data-dealer-close></div>
+      <div class="dealer-modal-panel" role="dialog" aria-label="Dealership enquiry" aria-modal="true">
+        <button type="button" class="dealer-modal-close" data-dealer-close aria-label="Close">&times;</button>
+
+        <div class="dealer-modal-header">
+          <span class="eyebrow eyebrow-dark">Partner With Us</span>
+          <h3>Dealership Enquiry</h3>
+          <p>Share a few details and our team will call you within one business day to discuss the opportunity.</p>
+        </div>
+
+        <form class="dealer-form" id="dealerForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+          <input type="hidden" name="access_key" value="955f1482-e129-4e75-a297-fbdea9e42c12" />
+          <input type="hidden" name="subject" value="New Dealership Enquiry — Shankra Plaster" />
+          <input type="hidden" name="from_name" value="Shankra Plaster — Dealer Enquiry" />
+          <input type="checkbox" name="botcheck" class="visually-hidden" style="display:none" tabindex="-1" autocomplete="off" />
+
+          <div class="dealer-form-row">
+            <div class="field">
+              <label for="d_name">Your Name *</label>
+              <input type="text" id="d_name" name="name" required autocomplete="name" placeholder="Full name" />
+            </div>
+            <div class="field">
+              <label for="d_firm">Firm / Shop Name *</label>
+              <input type="text" id="d_firm" name="firm" required placeholder="Business name" />
+            </div>
+          </div>
+
+          <div class="dealer-form-row">
+            <div class="field">
+              <label for="d_phone">Mobile / WhatsApp *</label>
+              <input type="tel" id="d_phone" name="phone" required inputmode="tel" autocomplete="tel" placeholder="+91 98765 43210" />
+            </div>
+            <div class="field">
+              <label for="d_email">Email <span class="field-hint">(optional)</span></label>
+              <input type="email" id="d_email" name="email" autocomplete="email" placeholder="you@example.com" />
+            </div>
+          </div>
+
+          <div class="dealer-form-row">
+            <div class="field">
+              <label for="d_city">City *</label>
+              <input type="text" id="d_city" name="city" required placeholder="e.g. Jaipur" />
+            </div>
+            <div class="field">
+              <label for="d_state">State *</label>
+              <input type="text" id="d_state" name="state" required placeholder="e.g. Rajasthan" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="d_business_type">Type of Business *</label>
+            <select id="d_business_type" name="business_type" required>
+              <option value="">Select…</option>
+              <option>Retail Counter</option>
+              <option>Wholesale</option>
+              <option>Distributor</option>
+              <option>Building Materials Store</option>
+              <option>Hardware Store</option>
+              <option>Paint Store</option>
+              <option>Contractor Supply</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="d_notes">Additional Notes <span class="field-hint">(optional)</span></label>
+            <textarea id="d_notes" name="notes" rows="3" placeholder="Anything else we should know…"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-hero btn-block" id="dealerSubmit">Submit Enquiry</button>
+          <p class="form-status" id="dealerStatus" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
 
   </main>
 
@@ -736,6 +823,6 @@
     </svg>
   </a>
 
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>
